@@ -357,6 +357,25 @@ class TestRandomDist(object):
                             [0.4575674820298663, 0.7781880808593471]])
         assert_array_almost_equal(actual, desired, decimal=15)
 
+    def test_random_sample_aliases(self):
+        np.random.seed(self.seed)
+        shape = (3, 2)
+        desired = np.random.random_sample((3, 2))
+        for alias in (np.random.ranf, np.random.random, np.random.sample):
+            np.random.seed(self.seed)
+            actual = alias(shape)
+            assert_array_almost_equal(
+                actual, desired, decimal=15,
+                err_msg="numpy.random.random_sample alias {} did not perform as expected".format(alias)
+            )
+
+    def test_RandomState_random_sample_aliases():
+        shape = (3, 2)
+        desired = np.random.RandomState(self.seed).random_sample(shape)
+        assert_array_almost_equal(np.random.RandomState(self.seed).ranf(shape), desired)
+        assert_array_almost_equal(np.random.RandomState(self.seed).random(shape), desired)
+        assert_array_almost_equal(np.random.RandomState(self.seed).sample(shape), desired)
+
     def test_choice_uniform_replace(self):
         np.random.seed(self.seed)
         actual = np.random.choice(4, 4)

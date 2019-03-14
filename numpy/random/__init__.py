@@ -145,6 +145,8 @@ with warnings.catch_warnings():
 # Some aliases:
 ranf = random = sample = random_sample
 __all__.extend(['ranf', 'random', 'sample'])
+RandomState.ranf = RandomState.random = RandomState.sample = RandomState.random_sample
+
 
 def __RandomState_ctor():
     """Return a RandomState instance.
